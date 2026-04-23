@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordic Knots — $1.57M Revenue Recovery Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .nk {
+    background: #0e0e0e;
+    font-family: 'Inter', sans-serif;
+    color: #f5f0e8;
+    width: 960px;
+    max-width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+
+  .nk-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: stretch;
+    border-bottom: 1px solid #222;
+  }
+
+  .nk-top-left {
+    padding: 36px 36px 30px 44px;
+    border-right: 1px solid #222;
+  }
+
+  .nk-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .nk-pill {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #0e0e0e;
+    background: #b8f080;
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+
+  .nk-eyebrow-txt {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .nk-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #f5f0e8;
+    max-width: 520px;
+  }
+
+  .nk-title em { font-style: italic; color: #b8f080; }
+
+  .nk-top-right {
+    padding: 32px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    min-width: 240px;
+  }
+
+  .nk-hero-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 6px;
+  }
+
+  .nk-hero-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 86px;
+    line-height: 0.88;
+    color: #b8f080;
+    letter-spacing: 1px;
+    text-align: right;
+  }
+
+  .nk-hero-sub {
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    text-align: right;
+  }
+
+  .nk-leak {
+    background: #141414;
+    border-bottom: 1px solid #222;
+    padding: 20px 44px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .leak-item {
+    padding: 0 20px;
+    border-right: 1px solid #222;
+  }
+
+  .leak-item:first-child { padding-left: 0; }
+  .leak-item:last-child { border-right: none; }
+
+  .leak-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 6px;
+  }
+
+  .leak-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .leak-val.red { color: #ff5c5c; }
+  .leak-val.white { color: #f5f0e8; }
+  .leak-sub { font-size: 10px; color: #444; }
+
+  .nk-body { display: grid; grid-template-columns: 1fr 220px; }
+
+  .nk-main {
+    padding: 30px 32px 32px 44px;
+    border-right: 1px solid #1e1e1e;
+  }
+
+  .nk-sidebar { padding: 26px 22px; background: #0a0a0a; }
+
+  .section { margin-bottom: 26px; }
+
+  .sec-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+
+  .sec-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #b8f080;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .sec-line { flex: 1; height: 1px; background: #222; }
+
+  .sec-heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: #f5f0e8;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .body-text { font-size: 12px; line-height: 1.85; color: #7a7a7a; }
+  .body-text strong { color: #f5f0e8; font-weight: 500; }
+
+  .alert-strip {
+    background: #141f0e;
+    border: 1px solid #2e4a1e;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .alert-dot { width: 8px; height: 8px; background: #b8f080; border-radius: 50%; flex-shrink: 0; }
+  .alert-txt { font-size: 11.5px; color: #b8f080; line-height: 1.5; font-weight: 500; }
+
+  .steps { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: #b8f080;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 18px;
+    margin-top: 1px;
+  }
+
+  .step-text { font-size: 12px; line-height: 1.65; color: #7a7a7a; }
+  .step-text strong { color: #f5f0e8; font-weight: 500; }
+
+  .recovery-table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+
+  .recovery-table th {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #444;
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid #222;
+    font-weight: 500;
+  }
+
+  .recovery-table td {
+    padding: 10px 12px;
+    color: #7a7a7a;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 11.5px;
+  }
+
+  .recovery-table tr.hl td { background: #141f0e; color: #b8f080; font-weight: 500; }
+  .recovery-table tr.hl td:first-child { border-left: 2px solid #b8f080; }
+
+  .chart-wrap {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 18px 20px 14px;
+    margin: 18px 0;
+  }
+
+  .chart-legend { display: flex; gap: 18px; margin-bottom: 12px; flex-wrap: wrap; }
+
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #555; }
+  .leg-sq { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  .chart-caption { font-size: 9.5px; color: #3a3a3a; text-align: center; margin-top: 10px; letter-spacing: 0.5px; }
+
+  .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+
+  .quote-wrap {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .quote-mark { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: #b8f080; line-height: 0.7; margin-bottom: 10px; }
+
+  .quote-body {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #b0a898;
+    margin-bottom: 12px;
+  }
+
+  .quote-attr { font-size: 10px; color: #444; letter-spacing: 0.5px; }
+
+  .cta-wrap {
+    background: #b8f080;
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cta-headline { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #0e0e0e; line-height: 1.1; letter-spacing: 0.5px; }
+  .cta-body { font-size: 12px; color: #2a4a0e; line-height: 1.6; }
+  .cta-body strong { color: #0e0e0e; }
+
+  .cta-btn {
+    display: block;
+    background: #0e0e0e;
+    color: #b8f080;
+    border-radius: 5px;
+    padding: 13px 16px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+
+  .sb-eyebrow { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: #333; font-weight: 600; margin-bottom: 18px; }
+
+  .sb-stat { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #1a1a1a; }
+  .sb-stat:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+  .sb-stat-label { font-size: 9px; letter-spacing: 1.5px; color: #333; text-transform: uppercase; margin-bottom: 5px; }
+
+  .sb-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 0.5px; line-height: 1; margin-bottom: 4px; }
+  .sb-stat-sub { font-size: 10px; line-height: 1.4; }
+
+  .sb-divider { height: 1px; background: #1a1a1a; margin: 16px 0; }
+
+  .sb-meta-row { display: flex; justify-content: space-between; gap: 6px; margin-bottom: 10px; align-items: flex-start; }
+  .sb-meta-key { font-size: 8.5px; text-transform: uppercase; letter-spacing: 1px; color: #333; flex-shrink: 0; }
+  .sb-meta-val { font-size: 10px; color: #666; text-align: right; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="nk">
+
+  <div class="nk-top">
+    <div class="nk-top-left">
+      <div class="nk-eyebrow">
+        <span class="nk-pill">Revenue Recovery</span>
+        <span class="nk-eyebrow-txt">DTC E-Commerce · Case Study</span>
+      </div>
+      <div class="nk-title">
+        How Nordic Knots can reclaim <em>$1.57M/year</em> from carts that never checked out
+      </div>
+    </div>
+    <div class="nk-top-right">
+      <div class="nk-hero-label">Recoverable annually</div>
+      <div class="nk-hero-num">$1.57M</div>
+      <div class="nk-hero-sub">Zero new ad spend</div>
+    </div>
+  </div>
+
+  <div class="nk-leak">
+    <div class="leak-item">
+      <div class="leak-label">Monthly visitors</div>
+      <div class="leak-val white">37,500</div>
+      <div class="leak-sub">walk through the door</div>
+    </div>
+    <div class="leak-item">
+      <div class="leak-label">Add to cart</div>
+      <div class="leak-val white">2,500</div>
+      <div class="leak-sub">show purchase intent</div>
+    </div>
+    <div class="leak-item">
+      <div class="leak-label">Abandoned</div>
+      <div class="leak-val red">1,750</div>
+      <div class="leak-sub">vanish every month</div>
+    </div>
+    <div class="leak-item">
+      <div class="leak-label">Monthly cost</div>
+      <div class="leak-val red">$190K</div>
+      <div class="leak-sub">in lost revenue</div>
+    </div>
+  </div>
+
+  <div class="nk-body">
+    <div class="nk-main">
+
+      <div class="section">
+        <div class="sec-row"><span class="sec-tag">The Challenge</span><div class="sec-line"></div></div>
+        <div class="sec-heading">The $4.5M leaky bucket</div>
+        <div class="body-text">
+          Nordic Knots has a brand people love and a product worth $500 a pop. Traffic is strong. The site is beautiful. But behind the polished storefront sits a gaping hole — <strong>70% of carts are abandoned every month.</strong> That's 1,750 people who clicked "Add to Cart" and disappeared. Plus 1,200 email subscribers who have never made a single purchase. Nearly <strong>40,000 lost opportunities per month</strong> — people who raised their hand and said "I want this" but were never followed up with.
+        </div>
+        <div class="alert-strip">
+          <div class="alert-dot"></div>
+          <div class="alert-txt">At $500 AOV, that silence costs Nordic Knots $190,000 every 30 days. Annually: over $2.1M walking out the door without a receipt.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sec-row"><span class="sec-tag">The Solution</span><div class="sec-line"></div></div>
+        <div class="sec-heading">The 24/7 recovery machine</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Smart Email Recovery Flow —</strong> Triggers within 1 hour of abandonment with dynamic product images and a one-click return-to-cart. Converts the easiest wins first.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>SMS / WhatsApp Layer —</strong> For high-intent carts over $500, a gentle text nudge delivers 3× higher open rates than email alone.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Inactive Lead Reactivation —</strong> A separate drip turns 1,200 dormant email signups into first-time buyers using best-sellers and live social proof.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sec-row"><span class="sec-tag">The Numbers</span><div class="sec-line"></div></div>
+        <div class="sec-heading">$1.57M recovered without spending a dollar more on ads</div>
+        <table class="recovery-table">
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Recovery Rate</th>
+              <th>Extra Orders/Mo</th>
+              <th>Monthly Revenue</th>
+              <th>Annual Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Conservative</td>
+              <td>10%</td>
+              <td>+175</td>
+              <td>$87,500</td>
+              <td>$1.05M</td>
+            </tr>
+            <tr class="hl">
+              <td>★ Realistic Target</td>
+              <td>15%</td>
+              <td>+262</td>
+              <td>$131,000</td>
+              <td>$1.57M</td>
+            </tr>
+            <tr>
+              <td>Optimized</td>
+              <td>20%</td>
+              <td>+350</td>
+              <td>$175,000</td>
+              <td>$2.1M</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-sq" style="background:#2a2a2a;border:1px solid #444;"></div>Base revenue (before)</div>
+          <div class="leg-item"><div class="leg-sq" style="background:#b8f080;"></div>Recovered revenue (+$131K)</div>
+        </div>
+        <div style="position:relative;width:100%;height:160px;">
+          <canvas id="nkChart" role="img" aria-label="Stacked bar chart: before $375K, after $506K with $131K recovered">Before: $375K/month. After: $506K/month. Recovered: +$131K.</canvas>
+        </div>
+        <div class="chart-caption">Monthly revenue impact — abandoned cart automation at 15% recovery rate</div>
+      </div>
+
+      <div class="bottom-row">
+        <div>
+          <div class="sec-row"><span class="sec-tag">The Quote</span><div class="sec-line"></div></div>
+          <div class="quote-wrap">
+            <div class="quote-mark">"</div>
+            <div class="quote-body">We were spending six figures on ads just to watch 70% of the carts vanish. This system turned those ghosts into revenue.</div>
+            <div class="quote-attr">— Head of E-Commerce @ Nordic Knots</div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-row"><span class="sec-tag">Your Turn</span><div class="sec-line"></div></div>
+          <div class="cta-wrap">
+            <div class="cta-headline">How much is YOUR cart leaking right now?</div>
+            <div class="cta-body">Get a free <strong>Abandonment Audit & Revenue Recovery Forecast</strong> built on your store's actual numbers.</div>
+            <a class="cta-btn" href="https://calendly.com/automations-inquiry/new-meeting" target="_blank">→ Get the Free Audit</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="nk-sidebar">
+      <div class="sb-eyebrow">At a glance</div>
+
+      <div class="sb-stat">
+        <div class="sb-stat-label">Recoverable annually</div>
+        <div class="sb-stat-val" style="color:#b8f080;">$1.57M</div>
+        <div class="sb-stat-sub" style="color:#3a5a2a;">at 15% recovery rate</div>
+      </div>
+
+      <div class="sb-stat">
+        <div class="sb-stat-label">Monthly recovered</div>
+        <div class="sb-stat-val" style="color:#b8f080;">$131K</div>
+        <div class="sb-stat-sub" style="color:#3a5a2a;">from existing traffic</div>
+      </div>
+
+      <div class="sb-stat">
+        <div class="sb-stat-label">Cart abandonment</div>
+        <div class="sb-stat-val" style="color:#ff5c5c;">70%</div>
+        <div class="sb-stat-sub" style="color:#5a2a2a;">the silent killer</div>
+      </div>
+
+      <div class="sb-divider"></div>
+
+      <div class="sb-meta-row">
+        <div class="sb-meta-key">Client</div>
+        <div class="sb-meta-val">Nordic Knots</div>
+      </div>
+      <div class="sb-meta-row">
+        <div class="sb-meta-key">Industry</div>
+        <div class="sb-meta-val">DTC / Premium Home Goods</div>
+      </div>
+      <div class="sb-meta-row">
+        <div class="sb-meta-key">Annual Rev</div>
+        <div class="sb-meta-val">$4.5M</div>
+      </div>
+      <div class="sb-meta-row">
+        <div class="sb-meta-key">AOV</div>
+        <div class="sb-meta-val">$500</div>
+      </div>
+      <div class="sb-meta-row">
+        <div class="sb-meta-key">Fix</div>
+        <div class="sb-meta-val">Cart Recovery Automation</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+new Chart(document.getElementById('nkChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Before Automation', 'After Automation'],
+    datasets: [
+      {
+        label: 'Base revenue',
+        data: [375000, 375000],
+        backgroundColor: '#2e2e2e',
+        borderRadius: 4,
+        barThickness: 64,
+        stack: 'stack'
+      },
+      {
+        label: 'Recovered',
+        data: [0, 131000],
+        backgroundColor: '#b8f080',
+        borderRadius: 4,
+        barThickness: 64,
+        stack: 'stack'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (c) => {
+            if (c.datasetIndex === 0) return 'Base: $' + Math.round(c.parsed.y / 1000) + 'K';
+            if (c.parsed.y === 0) return '';
+            return 'Recovered: +$' + Math.round(c.parsed.y / 1000) + 'K';
+          }
+        }
+      }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 12, family: 'Inter' }, color: '#666' }, border: { display: false } },
+      y: { stacked: true, min: 0, max: 560000, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { stepSize: 140000, font: { size: 10 }, color: '#444', callback: (v) => '$' + Math.round(v / 1000) + 'K' }, border: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
